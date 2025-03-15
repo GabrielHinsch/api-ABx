@@ -1,0 +1,86 @@
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { View, Text, Button, FlatList } from 'react-native';
+
+const Stack = createStackNavigator();
+
+const cursos = [
+  { id: '1', nome: 'Curso de Programação' },
+  { id: '2', nome: 'Curso de Eletricista' },
+  { id: '3', nome: 'Curso de Costura' }
+];
+
+const empregos = [
+  { id: '1', titulo: 'Vaga de Desenvolvedor' },
+  { id: '2', titulo: 'Vaga de Atendente' },
+  { id: '3', titulo: 'Vaga de Pedreiro' }
+];
+
+const HomeScreen = ({ navigation }) => (
+  <View>
+    <Text>Bem-vindo ao App de Capacitação e Empregos!</Text>
+    <Button title="Entrar" onPress={() => navigation.navigate('Login')} />
+    <Button title="Cadastrar" onPress={() => navigation.navigate('Cadastro')} />
+  </View>
+);
+
+const LoginScreen = ({ navigation }) => (
+  <View>
+    <Text>Tela de Login</Text>
+    <Button title="Entrar" onPress={() => navigation.navigate('Dashboard')} />
+  </View>
+);
+
+const CadastroScreen = ({ navigation }) => (
+  <View>
+    <Text>Tela de Cadastro</Text>
+    <Button title="Cadastrar" onPress={() => navigation.navigate('Dashboard')} />
+  </View>
+);
+
+const DashboardScreen = ({ navigation }) => (
+  <View>
+    <Text>Dashboard - Escolha uma opção:</Text>
+    <Button title="Cursos" onPress={() => navigation.navigate('Cursos')} />
+    <Button title="Empregos" onPress={() => navigation.navigate('Empregos')} />
+    <Button title="Chat" onPress={() => {}} />
+  </View>
+);
+
+const CursosScreen = () => (
+  <View>
+    <Text>Lista de Cursos:</Text>
+    <FlatList
+      data={cursos}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => <Text>{item.nome}</Text>}
+    />
+  </View>
+);
+
+const EmpregosScreen = () => (
+  <View>
+    <Text>Lista de Empregos:</Text>
+    <FlatList
+      data={empregos}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => <Text>{item.titulo}</Text>}
+    />
+  </View>
+);
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Cadastro" component={CadastroScreen} />
+        <Stack.Screen name="Dashboard" component={DashboardScreen} />
+        <Stack.Screen name="Cursos" component={CursosScreen} />
+        <Stack.Screen name="Empregos" component={EmpregosScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
